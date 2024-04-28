@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 
 function AdminMenu() {
   const [items, setItems] = useState([]);
@@ -55,18 +56,25 @@ function AdminMenu() {
     marginRight: "10px",
   };
 
-  const handleAddItem = () => {
+  const handleAddItem = async(event) => {
     if (itemName.trim() !== "" && itemPrice.trim() !== "") {
       const newItem = {
-        name: itemName,
-        image: itemImage,
-        description: itemDescription,
-        price: parseFloat(itemPrice),
+        Itemname: itemName,
+        Itemimage: itemImage,
+        Itemdesc: itemDescription,
+        Price: parseFloat(itemPrice),
       };
       setItems([...items, newItem]);
-      resetForm();
-      setShowAddModal(false);
+    try{
+      const response = await axios.post('http://localhost:8080/menuorder',newItem);
+      console.log("Successfully Added",response.data);
+      setItems([...items, response.data]);
+    }catch(error){
+      console.log("Unsuccessfull",error);
     }
+    resetForm();
+    setShowAddModal(false);
+  }
   };
 
   const handleRemoveItem = (itemName) => {

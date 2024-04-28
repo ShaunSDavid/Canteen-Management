@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -15,20 +16,27 @@ function Login() {
         setPassword(event.target.value);
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async(event) => {
         event.preventDefault();
         const isAdmin = username === 'admin' && password === 'admin'; // Example admin credentials
-
-        if (isAdmin) {
-            // Navigate to the admin dashboard if admin credentials are correct
-            navigate('/admin');
-        } else {
-            // For regular users, navigate to the user dashboard
-            // Here you can add your logic to authenticate the user with the provided username and password
-            console.log('Submitting username:', username);
-            console.log('Submitting password:', password);
-            setStatus(true);
-            navigate('/dashboard');
+        try{
+            const response=await axios.post("http://localhost:8080/login",{
+                username,
+                password
+            })
+            if (isAdmin) {
+                // Navigate to the admin dashboard if admin credentials are correct
+                navigate('/admin');
+            } else {
+                // For regular users, navigate to the user dashboard
+                // Here you can add your logic to authenticate the user with the provided username and password
+                console.log('Submitting username:', username);
+                console.log('Submitting password:', password);
+                setStatus(true);
+                navigate('/dashboard');
+            }
+        }catch(error){
+            console.log("Login Failed",error);
         }
     }
 

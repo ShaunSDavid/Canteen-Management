@@ -1,17 +1,26 @@
-import React from 'react';
-
+import React,{useState} from 'react';
+import axios from 'axios';
 const MyCartPage = ({ cartItems, closeModal, removeItem, updateQuantity, increaseQuantity }) => {
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
-  const handlePlaceOrder = () => {
-    // Here you can implement the logic to place the order
-    // This could involve making an API request to a backend server
-
-    // For demonstration purposes, we'll just display an alert message
-    alert('Your order has been placed successfully!');
-
-    // After placing the order, you might want to clear the cart
-    // You can add that logic here
+  const currentTime = new Date();
+  const currentHours = String(currentTime.getHours()).padStart(2, '0');
+  const currentMinutes = String(currentTime.getMinutes()).padStart(2, '0');
+  const formattedTime = currentHours + ':' + currentMinutes;
+  const[Status,setStatus]=useState("Completed");
+  const handlePlaceOrder = async(event) => {
+    event.preventDefault();
+    try{
+      setStatus("Pending");
+      const response = await axios.post('http://localhost:8080/adminmenu',{
+        formattedTime,
+        totalPrice,
+        Status,
+      })
+      console.log("Succcesfull order",response.data);
+      alert('Your order has been placed successfully!');
+    }catch(error){
+      alert("Unsuccessfull Order");
+    }
   };
 
   return (
