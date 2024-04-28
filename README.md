@@ -1,6 +1,8 @@
 Simple Canteen Management App using SpringBoot and React
 
 For Database in Mysql in Apache XAMPP use the following queries for the database
+
+
 CREATE TABLE orders (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     Itemname VARCHAR(255),
