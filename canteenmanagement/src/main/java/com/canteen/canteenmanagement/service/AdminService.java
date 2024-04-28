@@ -21,7 +21,8 @@ public class AdminService {
         return repo.save(user);
     }
 
-    public List<AdminModel> retrieveAll() {
+    public List<AdminModel> getAllOrders() {
         return repo.findAll();
     }
+
 }

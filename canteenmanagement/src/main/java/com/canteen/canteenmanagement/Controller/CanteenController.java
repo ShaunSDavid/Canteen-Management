@@ -1,6 +1,6 @@
 package com.canteen.canteenmanagement.Controller;
 
-import java.util.List;
+// import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.canteen.canteenmanagement.model.AdminModel;
+// import com.canteen.canteenmanagement.model.AdminModel;
 import com.canteen.canteenmanagement.model.CanteenModel;
 import com.canteen.canteenmanagement.model.MenuModel;
-import com.canteen.canteenmanagement.service.AdminService;
+// import com.canteen.canteenmanagement.service.AdminService;
 import com.canteen.canteenmanagement.service.LogService;
 import com.canteen.canteenmanagement.service.MenuService;
 
@@ -36,7 +36,7 @@ public class CanteenController {
     @Autowired
     private MenuService oservice;
 
-    @GetMapping("/#my-order")
+    @GetMapping("/adminmenu")
     public String api1() {
         return "menuorder";
     }
@@ -48,30 +48,4 @@ public class CanteenController {
         return addMenuItem;
     }
 
-    @Autowired
-    private AdminService aservice;
-
-    @GetMapping("/admin")
-    public String api2() {
-        return "adminmenu";
-    }
-
-    @PostMapping("/adminmenu")
-    public AdminModel add(@ModelAttribute("user") AdminModel user) {
-        AdminModel addorder = aservice.add(user.getOrderId(), user.getTime(), user.getPrice(), user.getStatus());
-        return addorder;
-    }
-
-    @Autowired
-    private AdminService adservice;
-
-    @GetMapping("/#my-orders")
-    public String api3() {
-        return "adminall";
-    }
-
-    @PostMapping("/adminall")
-    public List<AdminModel> retrieveAll() {
-        return adservice.retrieveAll();
-    }
 }
